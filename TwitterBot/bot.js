@@ -20,7 +20,7 @@ setInterval(tweeting,1000*60*15); //For Every 15 min
 
 function tweeting(){
     var parameters =  { 
-            q: '#IPL2017 OR #IPL10 OR Cricket OR #OrangeArmy OR from:virendersehwag', 
+            q: '#IPL2017 OR #IPL10 OR #Cricket :) OR #IPL', 
             lang : 'en',
             count: 30,
             result_type:'popular'
@@ -33,7 +33,9 @@ function tweeting(){
         var tweets=data.statuses;
         var gotID;
         var i = Math.floor(Math.random()*100);
-        i=i%30;
+        i=i%tweets.length;
+
+        if(tweets.length!=0){
         //for (var i=0;i<tweets.length;i++){
             console.log(tweets[i].text);
             gotID=tweets[i].id_str;
@@ -42,6 +44,7 @@ function tweeting(){
      
         var string=tweets[i].text
         postThisID(gotID);
+    }
     }
  }
 
