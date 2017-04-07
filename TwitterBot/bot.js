@@ -16,34 +16,34 @@ function followed(eventMsg){
 
 tweeting();
 
-setInterval(tweeting,1000*60*15); //For Every 15 min
+setInterval(tweeting,1000*60*12); //For Every 12 min
 
 function tweeting(){
     var parameters =  { 
-            q: '#IPL2017 OR #IPL10 OR #Cricket :) OR #IPL', 
+            q: '#IPL2017 OR #IPL10 OR #IPL OR from:ICC', 
             lang : 'en',
-            count: 30,
+            count: 10,
             result_type:'popular'
         }
         
     T.get('search/tweets',parameters,gotData)
 
     function gotData(err, data, response) {
-
         var tweets=data.statuses;
         var gotID;
         var i = Math.floor(Math.random()*100);
-        i=i%tweets.length;
 
         if(tweets.length!=0){
-        //for (var i=0;i<tweets.length;i++){
+            i=i%tweets.length;
             console.log(tweets[i].text);
-            gotID=tweets[i].id_str;
-            // console.log("\n"+gotID[i]);
-    // }
-     
-        var string=tweets[i].text
+            // console.log(tweets[i]);
+            gotID=tweets[i].id_str;     
+        var string=tweets[i].text;
+        console.log("favourites_count is "+tweets[i].favorite_count);
+        console.log("retweet_count is "+tweets[i].retweet_count);
+        if(tweets[i].favorite_count>1 || tweets[i].retweet_count>1){
         postThisID(gotID);
+    }
     }
     }
  }
@@ -67,6 +67,6 @@ function postThisFollow(string){
          T.post('statuses/update',tweet,tweeted);
      
      function tweeted(err,data,response){
-             console.log("Retweeted");
+             console.log("Mentioned User");
         }
 }
