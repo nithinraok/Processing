@@ -20,7 +20,7 @@ setInterval(tweeting,1000*60*12); //For Every 12 min
 
 function tweeting(){
     var parameters =  { 
-            q: '#CT17 OR from:ICC', 
+            q: ' #INDvsAUS OR #PAKvsSL OR #SAvsBAN',  //OR from:ICC
             lang : 'en',
             count: 10,
             result_type:'popular'
