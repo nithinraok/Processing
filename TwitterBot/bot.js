@@ -21,13 +21,13 @@ function replied(eventMsg){
 	var tweetFrom = eventMsg.user.screen_name;
 	var repliedText = eventMsg.text;
 	var status_id = eventMsg.id_str;
-	
+
 	if(tweetTo == 'bot_cricket'){
 		var string_text = 'Hey @' + tweetFrom + ' thanks for tweeting me #CricketBot' ;
-		
+
 		postThisReply(string_text,status_id);
 	}
-	
+
 }
 
 tweeting();
@@ -35,13 +35,13 @@ tweeting();
 setInterval(tweeting,1000*60*12); //For Every 12 min
 
 function tweeting(){
-    var parameters =  { 
-            q: ' #INDvsAUS OR #PAKvsSL OR #SAvsBAN',  //OR from:ICC 
+    var parameters =  {
+            q: ' #SAvIND OR #INDvSA OR #BBL07 OR #IPL OR #U19CWC',  //OR from:ICC 
             lang : 'en',
             count: 10,
             result_type:'popular'
         }
-        
+
     T.get('search/tweets',parameters,gotData)
 
     function gotData(err, data, response) {
@@ -53,7 +53,7 @@ function tweeting(){
             i=i%tweets.length;
             console.log(tweets[i].text);
             // console.log(tweets[i]);
-            gotID=tweets[i].id_str;     
+            gotID=tweets[i].id_str;
         var string=tweets[i].text;
         console.log("favourites_count is "+tweets[i].favorite_count);
         console.log("retweet_count is "+tweets[i].retweet_count);
@@ -65,35 +65,35 @@ function tweeting(){
  }
 
 function postThisID(string){
-        var tweet={             
+        var tweet={
             id : string
-        }   
+        }
          T.post('statuses/retweet/:id',tweet,tweeted);
-              
+
      function tweeted(err,data,response){
              console.log("Retweeted");
      }
-     
+
 }
 
 function postThisFollow(string){
-        var tweet={             
+        var tweet={
             status : string
-        }   
+        }
          T.post('statuses/update',tweet,tweeted);
-     
+
      function tweeted(err,data,response){
              console.log("Mentioned User");
         }
 }
 
 function postThisReply(string,id){
-        var tweet={             
+        var tweet={
             status : string,
 			in_reply_to_status_id : id
-        }   
+        }
          T.post('statuses/update',tweet,tweeted);
-     
+
      function tweeted(err,data,response){
              console.log("Replied to tweet");
         }
